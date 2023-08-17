@@ -32,15 +32,15 @@ app.post('/api/v1/user/login', async (req, res) => {
                          id:  id
                     }, process.env.JWT_TOKEN_KEY)
                     let claims = {id: id, name: member.fullName, email: member.email}
-                    res.status(200).send({status:'Ok', data: {token, claims}, message: 'Login is successful'}) 
+                    res.status(200).send({status:'Ok', statusCode:200, data: {token, claims}, message: 'Login is successful'}) 
                }else{
-                    res.status(404).send({status:'Failed', data: null, message: 'User does not exists!'})
+                    res.status(404).send({status:'Failed', statusCode:404, data: null, message: 'User does not exists!'})
                }
          }else{
-               res.status(400).send({status:'Failed', data: null, message: 'kindly supply email address'})
+               res.status(400).send({status:'Failed', statusCode:400, data: null, message: 'kindly supply email address'})
          }
      } catch (error) {
-          res.status(500).send({status: 'Failed', data: null, message : error.message})
+          res.status(500).send({status: 'Failed', statusCode:500, data: null, message : error.message})
      }
     
  })
@@ -52,16 +52,16 @@ app.post('/api/v1/user/create', async(req, res) => {
                let userExists = await user.findOne({email: req.body.email})
                console.log(userExists)
                if(userExists !== null) {
-                    res.status(309).send({status:'Failed', data: null, message:"User already exists"})
+                    res.status(309).send({status:'Failed', statusCode:309, data: null, message:"User already exists"})
                }else{
                     await user.create(body)
-                    res.status(201).send({status:'Ok', data: null, message: 'user has been created successfully'})
+                    res.status(201).send({status:'Ok', statusCode:201, data: null, message: 'user has been created successfully'})
                }
           }else{
-               res.status(400).send({status:'Failed', data: null, message: 'kindly fill all fields'})
+               res.status(400).send({status:'Failed', statusCode:400, data: null, message: 'kindly fill all fields'})
           }
      } catch (error) {
-          res.status(500).send({status: 'Failed', data: null, message : error.message})
+          res.status(500).send({status: 'Failed', statusCode:500, data: null, message : error.message})
      }
 
 })
