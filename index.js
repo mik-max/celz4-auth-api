@@ -10,7 +10,9 @@ const app = express();
 
  //middlewares
  app.use(express.json());
- app.use(Cors());
+ app.use(Cors({
+     origin: '*'
+ }));
 
  const port = process.env.PORT || 8000
 
